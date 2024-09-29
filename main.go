@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/joho/godotenv"
+	"golang.design/x/clipboard"
 )
 
 func main() {
@@ -19,13 +20,11 @@ func main() {
 	fmt.Print("Enter the link of the YouTube video: ")
 	scanner.Scan()
 	youtubeLink := scanner.Text()
-	encryptedPath := GetEncryptedFileName(filePath, youtubeLink)
+	encryptedPath := GetEncryptedFilePath(filePath, youtubeLink)
 
 	// Load environment variables from the .env file
-	err := godotenv.Load()
-	if err != nil {
-		fmt.Printf("Error loading .env file: %v\n", err)
-		return
+	if err := godotenv.Load(); err != nil {
+		panic(fmt.Sprintf("Error loading .env file: %v\n", err))
 	}
 
 	// get keys from env file
@@ -33,6 +32,18 @@ func main() {
 	iv := os.Getenv("ENC_IV_HEX")
 
 	if err := EncryptFile(filePath, encryptedPath, secretKey, iv); err != nil {
-		fmt.Printf("Error: %v\n", err)
+		panic(fmt.Sprintf("Error: %v\n", err))
 	}
+
+	fmt.Println("\nFile encrypted successfully.")
+	fmt.Printf("\nEncrypted file path: %s\n", encryptedPath)
+	fmt.Printf("\nEncrypted file name (already copied to clipboard): %s\n", encryptedPath[strings.LastIndex(encryptedPath, "\\")+1:strings.LastIndex(encryptedPath, ".")])
+
+	if err := clipboard.Init(); err != nil {
+		panic(fmt.Sprintf("Error initializing clipboard: %v\n", err))
+	}
+	clipboard.Write(clipboard.FmtText, []byte(encryptedPath[strings.LastIndex(encryptedPath, "\\")+1:strings.LastIndex(encryptedPath, ".")]))
+
+	fmt.Println("\nPress Enter to exit.")
+	scanner.Scan()
 }

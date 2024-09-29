@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func GetEncryptedFileName(filePath string, videoUrl string) string {
+func GetEncryptedFilePath(filePath string, videoUrl string) string {
 	id := (strings.Split(videoUrl[strings.Index(videoUrl, "v=")+2:len(videoUrl)-1], ""))
 
 	for i, j := 0, len(id)-1; i < j; i, j = i+1, j-1 {

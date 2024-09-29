@@ -70,7 +70,6 @@ func EncryptFile(filePath string, encryptedPath string, secretKey string, iv str
 		}
 	}
 
-	fmt.Println("File encrypted successfully.")
 	return nil
 }
 
