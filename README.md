@@ -1,5 +1,6 @@
-# Mr. Youssef Nagah
+# Beta LMS
 
-`Honor Biology | Youssef Nagah` Official Website/Application for Mr. Youssef Nagah
+> A secure LMS platform enabling online lectures with offline access, live sessions, protected PDF notes, and comprehensive assessments with strict content and account protection.
 
-This is an internal tool to _process_ and _encrypt_ videos before uploading them to host storage for use inside `Honor Biology | Youssef Nagah` app.
+This is an _internal tool_ to **process** and **encrypt** videos before uploading them to host storage for use within the `Beta LMS` app.
+
