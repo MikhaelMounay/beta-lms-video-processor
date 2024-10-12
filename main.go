@@ -11,25 +11,36 @@ import (
 )
 
 func main() {
+	// Load environment variables from the .env file
+	if err := godotenv.Load(); err != nil {
+		panic(fmt.Sprintf("Error loading .env file: %v\n", err))
+	}
+
+	// Get keys from env file
+	secretKey := os.Getenv("ENC_SECRET_KEY_HEX")
+	iv := os.Getenv("ENC_IV_HEX")
+	INSTANCE_NAME := os.Getenv("INSTANCE_NAME")
+
+	fmt.Println("\n----------------------------------------------------------------")
+	fmt.Println("\n--------------------------  Beta LMS  --------------------------")
+	fmt.Println("\n----------------------------------------------------------------")
+	fmt.Println("\n----------------  The Only Secure LMS You Need  ----------------")
+	fmt.Println("\n----------------------------------------------------------------")
+	fmt.Println("\n---------  Welcome to Beta LMS Video Processor! (v1)  ----------")
+	fmt.Println("\n----------------------------------------------------------------")
+
+	fmt.Printf("\nWelcome to Beta LMS Instance: %v\n\n", INSTANCE_NAME)
+
 	// Get inputs from user
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Print("Enter the path of the video file: ")
 	scanner.Scan()
 	filePath := strings.ReplaceAll(scanner.Text(), "\"", "")
 
-	fmt.Print("Enter the link of the YouTube video: ")
+	fmt.Print("\nEnter the link of the YouTube video: ")
 	scanner.Scan()
 	youtubeLink := scanner.Text()
 	encryptedPath := GetEncryptedFilePath(filePath, youtubeLink)
-
-	// Load environment variables from the .env file
-	if err := godotenv.Load(); err != nil {
-		panic(fmt.Sprintf("Error loading .env file: %v\n", err))
-	}
-
-	// get keys from env file
-	secretKey := os.Getenv("ENC_SECRET_KEY_HEX")
-	iv := os.Getenv("ENC_IV_HEX")
 
 	if err := EncryptFile(filePath, encryptedPath, secretKey, iv); err != nil {
 		panic(fmt.Sprintf("Error: %v\n", err))
