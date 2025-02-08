@@ -22,11 +22,13 @@ func main() {
 	vodKeyId := os.Getenv("VOD_KEY_ID")
 	vodKey := os.Getenv("VOD_KEY")
 	INSTANCE_NAME := os.Getenv("INSTANCE_NAME")
-	// secretKey := ""
-	// iv := ""
-	// vodKeyId := ""
-	// vodKey := ""
-	// INSTANCE_NAME := ""
+	// var (
+	// 	secretKey     = ""
+	// 	iv            = ""
+	// 	vodKeyId      = ""
+	// 	vodKey        = ""
+	// 	INSTANCE_NAME = ""
+	// )
 
 	fmt.Println("\n----------------------------------------------------------------")
 	fmt.Println("\n--------------------------  Beta LMS  --------------------------")
@@ -63,6 +65,11 @@ func main() {
 		fmt.Println("\nFile encrypted successfully.")
 		fmt.Printf("\nEncrypted file path: %s\n", encryptedPath)
 		fmt.Printf("\nEncrypted file name (already copied to clipboard): %s\n", encryptedPath[strings.LastIndex(encryptedPath, "\\")+1:])
+		if encFileHash, err := ComputeSHA256Hash(encryptedPath + ".enc"); err != nil {
+			panic(fmt.Sprintf("Error: %v\n", err))
+		} else {
+			fmt.Printf("\nEncrypted file hash: %s\n", encFileHash)
+		}
 
 		if err := clipboard.Init(); err != nil {
 			panic(fmt.Sprintf("Error initializing clipboard: %v\n", err))
