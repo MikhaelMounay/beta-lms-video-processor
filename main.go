@@ -19,6 +19,8 @@ func main() {
 	// Get keys from env file
 	secretKey := os.Getenv("ENC_SECRET_KEY_HEX")
 	iv := os.Getenv("ENC_IV_HEX")
+	vodKeyId := os.Getenv("VOD_KEY_ID")
+	vodKey := os.Getenv("VOD_KEY")
 	INSTANCE_NAME := os.Getenv("INSTANCE_NAME")
 
 	fmt.Println("\n----------------------------------------------------------------")
@@ -37,23 +39,27 @@ func main() {
 	scanner.Scan()
 	filePath := strings.ReplaceAll(scanner.Text(), "\"", "")
 
-	fmt.Print("\nEnter the link of the YouTube video: ")
+	fmt.Print("Enter video encoded name (press enter directly to generate random name): ")
 	scanner.Scan()
-	youtubeLink := scanner.Text()
-	encryptedPath := GetEncryptedFilePath(filePath, youtubeLink)
+	videoName := scanner.Text()
+	encryptedPath := GetEncryptedFilePath(filePath, videoName)
 
-	if err := EncryptFile(filePath, encryptedPath, secretKey, iv); err != nil {
+	if err := PackageVideoFile(filePath, encryptedPath, vodKeyId, vodKey, iv); err != nil {
+		panic(fmt.Sprintf("Error: %v\n", err))
+	}
+
+	if err := EncryptFile(filePath, encryptedPath+".enc", secretKey, iv); err != nil {
 		panic(fmt.Sprintf("Error: %v\n", err))
 	}
 
 	fmt.Println("\nFile encrypted successfully.")
 	fmt.Printf("\nEncrypted file path: %s\n", encryptedPath)
-	fmt.Printf("\nEncrypted file name (already copied to clipboard): %s\n", encryptedPath[strings.LastIndex(encryptedPath, "\\")+1:strings.LastIndex(encryptedPath, ".")])
+	fmt.Printf("\nEncrypted file name (already copied to clipboard): %s\n", encryptedPath[strings.LastIndex(encryptedPath, "\\")+1:])
 
 	if err := clipboard.Init(); err != nil {
 		panic(fmt.Sprintf("Error initializing clipboard: %v\n", err))
 	}
-	clipboard.Write(clipboard.FmtText, []byte(encryptedPath[strings.LastIndex(encryptedPath, "\\")+1:strings.LastIndex(encryptedPath, ".")]))
+	clipboard.Write(clipboard.FmtText, []byte(encryptedPath[strings.LastIndex(encryptedPath, "\\")+1:]))
 
 	fmt.Println("\nPress Enter to exit.")
 	scanner.Scan()
