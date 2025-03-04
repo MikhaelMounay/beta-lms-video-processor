@@ -41,17 +41,15 @@ func main() {
 	appKey = os.Getenv("B2_APP_KEY")
 	bucketID = os.Getenv("B2_BUCKET_ID")
 
-	// var (
-	// 	secretKey     = ""
-	// 	iv            = ""
-	// 	vodKeyId      = ""
-	// 	vodKey        = ""
-	// 	INSTANCE_NAME = ""
-	//  BaseB2Folder  = ""
-	//  appKeyID      = ""
-	//  appKey        = ""
-	//  bucketID      = ""
-	// )
+	// SecretKey = ""
+	// Iv = ""
+	// VodKeyId = ""
+	// VodKey = ""
+	// INSTANCE_NAME = ""
+	// BaseB2Folder = ""
+	// appKeyID = ""
+	// appKey = ""
+	// bucketID = ""
 
 	fmt.Println("\n----------------------------------------------------------------")
 	fmt.Println("\n--------------------------  Beta LMS  --------------------------")
