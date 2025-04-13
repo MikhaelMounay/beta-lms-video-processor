@@ -4,3 +4,4 @@
 
 This is an _internal tool_ to **process** and **encrypt** videos before uploading them to host storage for use within the `Beta LMS` app.
 
+This repo is deprecated in favor of [MikhaelMounay/beta-lms-video-and-pdf-processor](https://github.com/MikhaelMounay/beta-lms-video-and-pdf-processor)
